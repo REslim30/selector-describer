@@ -16,8 +16,7 @@
   <link rel="apple-touch-icon" href="icon.png">
   <!-- Place favicon.ico in the root directory -->
 
-  <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/tailwind-out.css">
 
   <meta name="theme-color" content="#fafafa">
 </head>
@@ -25,11 +24,16 @@
 <body>
 
   <!-- Add your site or application content here -->
-  <p>Ok here we go</p>
   <script src="js/vendor/modernizr-3.11.2.min.js"></script>
   <script src="js/plugins.js"></script>
   <script src="js/main.js"></script>
 
+  <div class="fixed bottom-0 w-full flex">
+    <input>
+    <button class="bg-primary-700 bg-blue-500 rounded-full w-10 h-10 inline-flex justify-center items-center pl-1">
+      <svg class="stroke-current text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-play"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+    </button>
+  </div>
   <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
   <script>
     window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
