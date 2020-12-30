@@ -28,88 +28,131 @@ function selectorToDescription(selector) {
   switch (selector.type) {
     case 'selectors':
       return selector.selectors.reduce((acc, cur, index) => (
-        acc + (index === 0 ? ' ' : '\n\nAlong with...\n') + helper(cur)
+        acc + selectorToDescription(cur)
       ), "");
     
     case 'ruleSet':
-      return selectorToDescription(selector.rule);
+      return markupCompoundSelector(selectorToDescription(selector.rule));
     
     case 'rule':
-      let description = "Any ";
-
-      if (selector.tagName)
-        description += selector.tagName + " ";
-      
-      description += "elements";
-
-      if (selector.id)
-        description += `\n\twith id: \n\t\t${selector.id}`;
-
-      if (selector.classNames)
-        description += `\n\twith class${selector.classNames.length === 1 ? '' : 'es'}: ${selector.classNames.reduce((acc, cur) => acc + '\n\t\t' + cur, "")}`;
-
-      if (selector.attrs)
-        description += `\n\twith attribute${selector.attrs.length === 1 ? '' : 's'}: ${selector.attrs.reduce((acc, cur) => acc + '\n\t\t' + describeAttributeMatcher(cur), "")}`;
-      
-      if (selector.nestingOperator !== undefined) {
-        switch (selector.nestingOperator) {
-          case null:
-            description += '\n\tthat are descendents of: \n';
-            break;
-          
-          case '>':
-            description += '\n\tthat are direct children of: \n';
-            break;
-          
-          case '~':
-            description += '\n\tthat are preceded by: \n';
-            break;
-          
-          case '+':
-            description += '\n\tthat are immediately preceded by: \n'
-            break;
-
-          default:
-            throw new Error('unkown nesting operator: ' + selector.nestingOperator);
-            break;
-        }
-      }
-
-      return selectorToDescription(selector.rule) + description ;
+      let tagDescription = getTagDescription(selector);
+      let subclassDescription = getSubclassDescription(selector);
+      return selectorToDescription(selector.rule) + tagDescription + indent(subclassDescription);
     
     default:
       throw new Error('Unknown selector parser type: ' + selector.type);
   }
 }
 
+function getTagDescription(selector) {
+  let description = "";
+
+  if (selector.tagName) {
+    description += markupTag(`&lt${selector.tagName}&gt`) + " ";
+  } else {
+    description += "Any ";
+  }
+  
+  description += "elements";
+
+  return description;
+}
+
+function getSubclassDescription(selector) {
+  let subclassSelector = "";
+  if (selector.id)
+    subclassSelector += markupSubclassLine(`with id:`) + markupSubclass(`${selector.id}`);
+
+  if (selector.classNames) {
+    subclassSelector += markupSubclassLine(`with class${selector.classNames.length === 1 ? '' : 'es'}:`);
+    subclassSelector += `${selector.classNames.reduce((acc, cur) => acc + markupSubclass(cur) + "<br>", "")}`;
+  }
+
+  if (selector.attrs) {
+    subclassSelector += markupSubclassLine(`with attribute${selector.attrs.length === 1 ? '' : 's'}:`)
+    subclassSelector += `${selector.attrs.reduce((acc, cur) => acc + describeAttributeMatcher(cur), "")}`;
+  }
+  
+  if (selector.nestingOperator !== undefined) {
+    switch (selector.nestingOperator) {
+      case null:
+        subclassSelector += markupSubclassLine('that are descendents of:');
+        break;
+      
+      case '>':
+        subclassSelector += markupSubclassLine('that are direct children of:');
+        break;
+      
+      case '~':
+        subclassSelector += markupSubclassLine('that are preceded by:');
+        break;
+      
+      case '+':
+        subclassSelector += markupSubclassLine('that are immediately preceded by:');
+        break;
+
+      default:
+        throw new Error('unkown nesting operator: ' + selector.nestingOperator);
+        break;
+    }
+  }
+  return subclassSelector;
+}
+
 function describeAttributeMatcher(attrs) {
-  let description = `'${attrs.name}'`;
+  let description = markupSubclass(attrs.name);
   if (attrs.operator) {
+    let attrValue = markupAttributeValue(`'${attrs.value}'`);
     switch (attrs.operator) {
       case '=':
-        description += ` equal to '${attrs.value}'`;
+        description += ` equal to ${attrValue}`;
         break;
       
       case '~=':
-        description += ` as a white-space separated list, containing '${attrs.value}'`;
+        description += ` as a white-space separated list, containing ${attrValue}`;
         break;
 
       case '|=':
-        description += ` equal to '${attrs.value}' or beginning with '${attrs.value}-'`;
+        description += ` equal to ${attrValue} or beginning with ${markupAttributeValue(`'${attrs.value}-'`)}`;
         break;
       
       case '^=':
-        description += ` beginning with '${attrs.value}'`;
+        description += ` beginning with ${attrValue}`;
         break;
       
       case '$=':
-        description += ` ending with '${attrs.value}'`;
+        description += ` ending with ${attrValue}`;
         break;
 
       case '*=':
-        description += ` containing substring '${attrs.value}'`;
+        description += ` containing substring ${attrValue}`;
         break;
     }
   }
   return description;
+}
+
+function markupTag(tag) {
+  return `<span class="text-red-700 font-mono">${tag}</span>`;
+}
+
+function markupSubclass(subclass) {
+  return `<span class="text-yellow-700 font-mono">${subclass}</span>`;
+}
+
+function markupCompoundSelector(selectorString) {
+  return `<div class="rounded bg-white shadow-md mt-4 p-4 overflow-x-scroll">${selectorString}</div>`;
+}
+
+function markupSubclassLine(subclassLine) {
+  return `<div class="text-xs mt-2">${subclassLine}</div>`;
+}
+
+function markupAttributeValue(value) {
+  return `<span class="text-blue-700 font-mono">${value}</span>`
+}
+
+//Indents html by wrapping in a div
+function indent(html) {
+  return `<div class='pl-10'>${html}</div>`;
 }
