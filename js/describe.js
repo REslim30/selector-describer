@@ -67,7 +67,7 @@ function getSubclassDescription(selector) {
 
   if (selector.attrs) {
     subclassSelector += markupSubclassLine(`with attribute${selector.attrs.length === 1 ? '' : 's'}:`)
-    subclassSelector += `${selector.attrs.reduce((acc, cur) => acc + describeAttributeMatcher(cur), "")}`;
+    subclassSelector += `${selector.attrs.reduce((acc, cur) => acc + describeAttributeMatcher(cur) + "<br>", "")}`;
   }
   
   if (selector.nestingOperator !== undefined) {
