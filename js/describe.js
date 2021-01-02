@@ -1,20 +1,17 @@
 var CssSelectorParser = require('css-selector-parser').CssSelectorParser,
   parser = new CssSelectorParser();
- 
+
+//Initialize parser
 parser.registerSelectorPseudos('has');
 parser.registerNestingOperators('>', '+', '~');
 parser.registerAttrEqualityMods('^', '$', '*', '~', '|');
 parser.enableSubstitutes();
  
-var util = require('util');
-
 // Outputs a description (with styling)
 // from a selector string
 module.exports = function describeSelector(selectorString) {
   try {
     let selector = parser.parse(selectorString);
-    console.log(util.inspect(selector, false, null));
-  
     return selectorToDescription(selector);
   } catch (error) {
     console.log(error);
@@ -132,16 +129,16 @@ function describeAttributeMatcher(attrs) {
   return description;
 }
 
+function markupCompoundSelector(selectorString) {
+  return `<div class="rounded bg-white shadow-md mt-4 p-4">${selectorString}</div>`;
+}
+
 function markupTag(tag) {
   return `<span class="text-red-700 font-mono">${tag}</span>`;
 }
 
 function markupSubclass(subclass) {
   return `<span class="text-yellow-700 font-mono">${subclass}</span>`;
-}
-
-function markupCompoundSelector(selectorString) {
-  return `<div class="rounded bg-white shadow-md mt-4 p-4 overflow-x-scroll">${selectorString}</div>`;
 }
 
 function markupSubclassLine(subclassLine) {
