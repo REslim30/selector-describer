@@ -9,8 +9,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
   //Set the describe event listeners
   function describeEventHandler() {
-    describeOutput.innerHTML = describeSelector(describeInput.value);
     describeOutput.classList.remove('flex');
+    describeOutput.innerHTML = describeSelector(describeInput.value);
   }
 
   describeButton.addEventListener('click', describeEventHandler);

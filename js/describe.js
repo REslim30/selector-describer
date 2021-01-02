@@ -15,7 +15,7 @@ module.exports = function describeSelector(selectorString) {
     return selectorToDescription(selector);
   } catch (error) {
     console.log(error);
-    return "Invalid css selector. (Or currently unsupported syntax)"
+    return errorMarkup();
   }
 }
 
@@ -152,4 +152,15 @@ function markupAttributeValue(value) {
 //Indents html by wrapping in a div
 function indent(html) {
   return `<div class='pl-10'>${html}</div>`;
+}
+
+function errorMarkup() {
+  let describeOutput = document.querySelector('#describe-output');
+  describeOutput.classList.add('flex');
+
+
+  return `<div class="flex flex-col items-center h-full w-full">
+    <img src="${require('../img/error.svg')}" class="w-24 opacity-75" alt="error" type="image/svg+xml">
+    <p class="text-center text-sm text-neutral-800 mt-4">Invalid css selector. Try again.</p>
+  </div>`;
 }
