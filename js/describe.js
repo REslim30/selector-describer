@@ -12,6 +12,8 @@ parser.enableSubstitutes();
 module.exports = function describeSelector(selectorString) {
   try {
     let selector = parser.parse(selectorString);
+    if (selector === null)
+      throw new Error("Selector empty");
     return selectorToDescription(selector);
   } catch (error) {
     console.log(error);
