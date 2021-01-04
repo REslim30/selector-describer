@@ -132,7 +132,7 @@ function describeAttributeMatcher(attrs) {
 }
 
 function markupCompoundSelector(selectorString) {
-  return `<div class="rounded bg-white shadow-md mt-4 p-4 slide-in-right">${selectorString}</div>`;
+  return `<div class="rounded bg-white shadow-md mt-4 p-4 slide-in-right max-w-full w-auto">${selectorString}</div>`;
 }
 
 function markupTag(tag) {
