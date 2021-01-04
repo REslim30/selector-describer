@@ -47,7 +47,7 @@ function getTagDescription(selector) {
   let description = "";
 
   if (selector.tagName) {
-    description += markupTag(`&lt${selector.tagName}&gt`) + " ";
+    description += markupTag(`${selector.tagName}`) + " ";
   } else {
     description += "Any ";
   }
@@ -136,7 +136,7 @@ function markupCompoundSelector(selectorString) {
 }
 
 function markupTag(tag) {
-  return `<span class="text-red-700 font-mono">${tag}</span>`;
+  return `<span aria-label="${tag}" class="text-red-700 font-mono"><span aria-hidden="true">&lt</span>${tag}<span aria-hidden="true">&gt</span></span>`;
 }
 
 function markupSubclass(subclass) {
