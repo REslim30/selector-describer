@@ -10,7 +10,7 @@
   <meta property="og:title" content="">
   <meta property="og:type" content="">
   <meta property="og:url" content="">
-  <meta property="og:image" content="">
+  <meta property="og:image" content="https://d1f678jpmf4epc.cloudfront.net/img/thumbnails/describeyourselector.png">
 
   <link rel="manifest" href="site.webmanifest">
   <link rel="apple-touch-icon" href="icon.png">
@@ -26,22 +26,22 @@
 </head>
 
 <body class="bg-neutral-100">
-  <div class="p-4 bg-neutral-100 min-h-screen flex flex-col max-w-screen-md mx-auto overflow-x-hidden">
+  <div class="flex flex-col max-w-screen-md min-h-screen p-4 mx-auto overflow-x-hidden bg-neutral-100">
     <nav class="flex justify-end">
       <a href="about.html" aria-label="about">
         <svg class="stroke-current text-neutral-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
       </a>
     </nav>
   
-    <main role="region" aria-live="polite" class="flex-auto pb-14 flex flex-col justify-center overflow-visible" id="describe-output">
+    <main role="region" aria-live="polite" class="flex flex-col justify-center flex-auto overflow-visible pb-14" id="describe-output">
       <img class="w-24 mx-auto mb-4 opacity-50" src="img/css3.svg" alt="CSS3">
-      <h1 class="text-center text-sm text-neutral-800">Enter in a CSS selector to describe it!</h1>
+      <h1 class="text-sm text-center text-neutral-800">Enter in a CSS selector to describe it!</h1>
     </main>
   
-    <div class="fixed w-screen max-w-screen-md bottom-0 inset-x-0 mx-auto px-4 pb-4 flex justify-between">
-      <input id="describe-input" class="rounded-full bg-neutral-300 shadow-md px-4 flex-auto mr-4 min-w-0 outline-none focus:ring ring-purple-400 text-neutral-900 placeholder-neutral-700" placeholder="e.g. div.foo#bar > a[href='test']" aria-label="CSS selector" aria-controls="describe-output">
-      <button id="describe-button" class="bg-primary-700 shadow-md bg-blue-500 rounded-full w-10 h-10 flex-none inline-flex justify-center items-center pl-1 focus:outline-none focus:ring ring-purple-400" aria-label="describe">
-        <svg class="stroke-current text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-play"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+    <div class="fixed inset-x-0 bottom-0 flex justify-between w-screen max-w-screen-md px-4 pb-4 mx-auto">
+      <input id="describe-input" class="flex-auto min-w-0 px-4 mr-4 rounded-full shadow-md outline-none bg-neutral-300 focus:ring ring-purple-400 text-neutral-900 placeholder-neutral-700" placeholder="e.g. div.foo#bar > a[href='test']" aria-label="CSS selector" aria-controls="describe-output">
+      <button id="describe-button" class="inline-flex items-center justify-center flex-none w-10 h-10 pl-1 bg-blue-500 rounded-full shadow-md bg-primary-700 focus:outline-none focus:ring ring-purple-400" aria-label="describe">
+        <svg class="text-white stroke-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-play"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
       </button>
     </div>
   </div>
